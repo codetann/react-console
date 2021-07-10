@@ -20,6 +20,15 @@ export default function useStorage() {
     setStorage((prevState) => [...prevState, { id: uuid(), data: d }]);
   const remove = (id) =>
     setStorage((prevState) => prevState.filter((i) => i.id !== id));
+  const update = (id, d) => {
+    setStorage((prevState) =>
+      prevState.map((i) => {
+        if (i.id === id) {
+          i.data = d;
+        }
+      })
+    );
+  };
 
-  return [storage, save, remove];
+  return [storage, save, remove, update];
 }

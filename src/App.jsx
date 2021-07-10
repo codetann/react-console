@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import useStorage from "./hooks/useStorage";
-import { useChange } from "./hooks/useEvent";
 import {
   Application,
   Title,
@@ -8,7 +7,9 @@ import {
   ShowButton,
   Input,
   Form,
+  Todos,
 } from "./App.style";
+import Item from "./components/Item/Item";
 
 function App() {
   const [storage, save, remove] = useStorage();
@@ -34,7 +35,6 @@ function App() {
           role="button"
           onClick={() => {
             handleShow();
-            console.log(value);
           }}
         >
           {show ? "Hide" : "Show"} completed
@@ -42,9 +42,12 @@ function App() {
       </Header>
 
       {/* Body */}
-      <div>
-        {storage && storage.map((item) => <p key={item.id}>{item.data}</p>)}
-      </div>
+      <Todos>
+        {storage &&
+          storage.map((item) => (
+            <Item key={item.id} show={show} text={item.data} />
+          ))}
+      </Todos>
 
       {/* Input */}
       <Form onSubmit={handleSubmit}>
